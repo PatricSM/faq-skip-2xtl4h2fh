@@ -97,16 +97,21 @@ export default function QuestionForm() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-3xl">
+    <div className="container mx-auto py-8 px-4 max-w-3xl text-brand-textPrimary">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900">
+        <h1 className="text-3xl font-bold text-brand-textPrimary tracking-tight">
           {isEditing ? 'Editar Pergunta' : 'Nova Pergunta'}
         </h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl border shadow-sm">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6 bg-white/[0.03] p-6 rounded-xl border border-brand-border backdrop-blur-sm"
+      >
         <div className="space-y-2">
-          <Label htmlFor="category">Categoria *</Label>
+          <Label htmlFor="category" className="text-brand-textPrimary">
+            Categoria *
+          </Label>
           <Select
             value={formData.category}
             onValueChange={(v) => setFormData((prev) => ({ ...prev, category: v }))}
@@ -125,30 +130,37 @@ export default function QuestionForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="question">Pergunta * (máx 500 caracteres)</Label>
+          <Label htmlFor="question" className="text-brand-textPrimary">
+            Pergunta * (máx 500 caracteres)
+          </Label>
           <Input
             id="question"
             value={formData.question}
             onChange={(e) => setFormData((prev) => ({ ...prev, question: e.target.value }))}
             maxLength={500}
             placeholder="Ex: Como redefinir minha senha?"
+            className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="answer">Resposta *</Label>
+          <Label htmlFor="answer" className="text-brand-textPrimary">
+            Resposta *
+          </Label>
           <Textarea
             id="answer"
             value={formData.answer}
             onChange={(e) => setFormData((prev) => ({ ...prev, answer: e.target.value }))}
-            className="min-h-[150px] whitespace-pre-wrap"
+            className="min-h-[150px] whitespace-pre-wrap bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
             placeholder="Digite a resposta aqui..."
           />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="status">Status</Label>
+            <Label htmlFor="status" className="text-brand-textPrimary">
+              Status
+            </Label>
             <Select
               value={formData.status}
               onValueChange={(v: 'draft' | 'published') =>
@@ -166,7 +178,9 @@ export default function QuestionForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="priority">Prioridade</Label>
+            <Label htmlFor="priority" className="text-brand-textPrimary">
+              Prioridade
+            </Label>
             <Select
               value={formData.priority}
               onValueChange={(v) => setFormData((prev) => ({ ...prev, priority: v }))}
@@ -183,16 +197,21 @@ export default function QuestionForm() {
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-4 pt-4 border-t">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-brand-border">
           <Button
             type="button"
             variant="outline"
             onClick={() => navigate('/admin/perguntas')}
             disabled={loading}
+            className="bg-white/[0.03] border-brand-border text-brand-textPrimary hover:bg-white/[0.06]"
           >
             Cancelar
           </Button>
-          <Button type="submit" disabled={loading}>
+          <Button
+            type="submit"
+            disabled={loading}
+            className="bg-brand-primary hover:bg-brand-primaryHover text-white shadow-glow"
+          >
             {loading ? 'Salvando...' : 'Salvar Pergunta'}
           </Button>
         </div>

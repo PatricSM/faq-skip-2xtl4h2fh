@@ -63,21 +63,32 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/40 p-4">
-      <Card className="w-full max-w-md shadow-lg border-primary/10">
+    <div className="relative min-h-screen flex items-center justify-center bg-brand-bg p-4 overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-[15%] -top-[10%] h-[34rem] w-[34rem] rounded-full bg-brand-primary/[0.18] blur-[100px]" />
+        <div className="absolute -right-[15%] bottom-[5%] h-[30rem] w-[30rem] rounded-full bg-brand-accent/[0.14] blur-[90px]" />
+      </div>
+
+      <Card className="relative w-full max-w-md bg-white/[0.03] backdrop-blur-xl border-brand-border shadow-elevation">
         <CardHeader className="space-y-2 text-center pb-6">
           <div className="flex justify-center mb-4">
-            <div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-              <ShieldCheck className="h-6 w-6" />
+            <div className="h-14 w-14 rounded-2xl bg-brand-gradient flex items-center justify-center shadow-glow">
+              <ShieldCheck className="h-7 w-7 text-white" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold tracking-tight">Login Restrito</CardTitle>
-          <CardDescription>Área de administração do FAQ Skip</CardDescription>
+          <CardTitle className="text-2xl font-bold tracking-tight text-brand-textPrimary">
+            Login Restrito
+          </CardTitle>
+          <CardDescription className="text-brand-textSecondary">
+            Área de administração do FAQ Skip
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-brand-textPrimary">
+                Email
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -86,10 +97,13 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isSubmitting}
                 required
+                className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:border-brand-primary/40"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
+              <Label htmlFor="password" className="text-brand-textPrimary">
+                Senha
+              </Label>
               <div className="relative">
                 <Input
                   id="password"
@@ -98,12 +112,13 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isSubmitting}
                   required
+                  className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:border-brand-primary/40 pr-10"
                 />
                 <Button
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-foreground"
+                  className="absolute right-0 top-0 h-full px-3 text-brand-textMuted hover:text-brand-textPrimary hover:bg-transparent"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -111,7 +126,11 @@ export default function Login() {
                 </Button>
               </div>
             </div>
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="w-full h-11 bg-brand-primary hover:bg-brand-primaryHover text-white font-semibold shadow-glow transition-all"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

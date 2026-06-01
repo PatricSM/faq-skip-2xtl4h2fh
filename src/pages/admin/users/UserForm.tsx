@@ -115,59 +115,86 @@ export default function UserForm() {
 
   if (loading) return null
 
+  const inputClass =
+    'bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary'
+
   return (
-    <div className="flex flex-col min-h-screen bg-muted/20">
-      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-6 shadow-sm">
-        <Button variant="ghost" size="icon" asChild>
+    <div className="flex flex-col min-h-screen bg-brand-bg text-brand-textPrimary">
+      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-brand-border bg-brand-bg/60 backdrop-blur-xl px-6">
+        <Button
+          variant="ghost"
+          size="icon"
+          asChild
+          className="text-brand-textPrimary hover:bg-white/[0.06]"
+        >
           <Link to="/admin/usuarios">
             <ArrowLeft className="h-5 w-5" />
           </Link>
         </Button>
-        <h1 className="text-xl font-semibold">{isEditing ? 'Editar Usuário' : 'Novo Usuário'}</h1>
+        <h1 className="text-xl font-semibold text-brand-textPrimary">
+          {isEditing ? 'Editar Usuário' : 'Novo Usuário'}
+        </h1>
       </header>
 
       <main className="flex-1 p-6 md:p-8 max-w-2xl mx-auto w-full">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6 bg-background p-6 rounded-lg border shadow-sm"
+          className="space-y-6 bg-white/[0.03] p-6 rounded-xl border border-brand-border backdrop-blur-sm"
         >
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="name">Nome</Label>
-              <Input id="name" {...form.register('name')} />
+              <Label htmlFor="name" className="text-brand-textPrimary">
+                Nome
+              </Label>
+              <Input id="name" {...form.register('name')} className={inputClass} />
               {form.formState.errors.name && (
-                <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
+                <p className="text-sm text-red-400">{form.formState.errors.name.message}</p>
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">E-mail</Label>
-              <Input id="email" type="email" disabled={isEditing} {...form.register('email')} />
+              <Label htmlFor="email" className="text-brand-textPrimary">
+                E-mail
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                disabled={isEditing}
+                {...form.register('email')}
+                className={inputClass + ' disabled:opacity-60'}
+              />
               {form.formState.errors.email && (
-                <p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
+                <p className="text-sm text-red-400">{form.formState.errors.email.message}</p>
               )}
             </div>
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="password">
+              <Label htmlFor="password" className="text-brand-textPrimary">
                 Senha{' '}
                 {isEditing && (
-                  <span className="text-muted-foreground text-xs">
+                  <span className="text-brand-textMuted text-xs">
                     (Deixe em branco para manter a atual)
                   </span>
                 )}
               </Label>
-              <Input id="password" type="password" {...form.register('password')} />
+              <Input
+                id="password"
+                type="password"
+                {...form.register('password')}
+                className={inputClass}
+              />
               {form.formState.errors.password && (
-                <p className="text-sm text-red-500">{form.formState.errors.password.message}</p>
+                <p className="text-sm text-red-400">{form.formState.errors.password.message}</p>
               )}
             </div>
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="role">Papel</Label>
+              <Label htmlFor="role" className="text-brand-textPrimary">
+                Papel
+              </Label>
               <Select
                 value={form.watch('role')}
                 onValueChange={(val) => form.setValue('role', val as any)}
                 disabled={currentUser?.role !== 'superadmin'}
               >
-                <SelectTrigger id="role">
+                <SelectTrigger id="role" className={inputClass}>
                   <SelectValue placeholder="Selecione..." />
                 </SelectTrigger>
                 <SelectContent>
@@ -176,15 +203,15 @@ export default function UserForm() {
                 </SelectContent>
               </Select>
               {form.formState.errors.role && (
-                <p className="text-sm text-red-500">{form.formState.errors.role.message}</p>
+                <p className="text-sm text-red-400">{form.formState.errors.role.message}</p>
               )}
             </div>
           </div>
 
-          <div className="flex items-center justify-between border-t pt-4">
+          <div className="flex items-center justify-between border-t border-brand-border pt-4">
             <div className="space-y-0.5">
-              <Label>Acesso Ativo</Label>
-              <p className="text-sm text-muted-foreground">
+              <Label className="text-brand-textPrimary">Acesso Ativo</Label>
+              <p className="text-sm text-brand-textMuted">
                 Permite que o usuário faça login no sistema.
               </p>
             </div>
@@ -195,11 +222,20 @@ export default function UserForm() {
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t">
-            <Button variant="outline" type="button" asChild>
+          <div className="flex justify-end gap-3 pt-4 border-t border-brand-border">
+            <Button
+              variant="outline"
+              type="button"
+              asChild
+              className="bg-white/[0.03] border-brand-border text-brand-textPrimary hover:bg-white/[0.06]"
+            >
               <Link to="/admin/usuarios">Cancelar</Link>
             </Button>
-            <Button type="submit" disabled={submitting}>
+            <Button
+              type="submit"
+              disabled={submitting}
+              className="bg-brand-primary hover:bg-brand-primaryHover text-white shadow-glow"
+            >
               <Save className="h-4 w-4 mr-2" />
               Salvar
             </Button>

@@ -78,16 +78,24 @@ export default function UserList() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-muted/20">
-      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-6 shadow-sm">
-        <Button variant="ghost" size="icon" asChild>
+    <div className="flex flex-col min-h-screen bg-brand-bg text-brand-textPrimary">
+      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-brand-border bg-brand-bg/60 backdrop-blur-xl px-6">
+        <Button
+          variant="ghost"
+          size="icon"
+          asChild
+          className="text-brand-textPrimary hover:bg-white/[0.06]"
+        >
           <Link to="/admin">
             <ArrowLeft className="h-5 w-5" />
           </Link>
         </Button>
-        <h1 className="text-xl font-semibold">Usuários</h1>
+        <h1 className="text-xl font-semibold text-brand-textPrimary">Usuários</h1>
         <div className="ml-auto">
-          <Button asChild>
+          <Button
+            asChild
+            className="bg-brand-primary hover:bg-brand-primaryHover text-white shadow-glow"
+          >
             <Link to="/admin/usuarios/novo">
               <Plus className="h-4 w-4 mr-2" />
               Novo Usuário
@@ -96,14 +104,14 @@ export default function UserList() {
         </div>
       </header>
       <main className="flex-1 p-6 md:p-8 max-w-6xl mx-auto w-full">
-        <div className="bg-background rounded-lg border shadow-sm overflow-hidden">
+        <div className="bg-white/[0.03] rounded-xl border border-brand-border overflow-hidden backdrop-blur-sm">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Nome / E-mail</TableHead>
-                <TableHead>Papel</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Ações</TableHead>
+              <TableRow className="border-b-brand-border hover:bg-transparent">
+                <TableHead className="text-brand-textSecondary">Nome / E-mail</TableHead>
+                <TableHead className="text-brand-textSecondary">Papel</TableHead>
+                <TableHead className="text-brand-textSecondary">Status</TableHead>
+                <TableHead className="text-right text-brand-textSecondary">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -113,49 +121,65 @@ export default function UserList() {
                 const canModify = !isSelf && !isMaster
 
                 return (
-                  <TableRow key={u.id}>
+                  <TableRow
+                    key={u.id}
+                    className="border-b-brand-border hover:bg-white/[0.04] transition-colors"
+                  >
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <span className="font-medium">{u.name || 'Sem nome'}</span>
+                        <span className="font-medium text-brand-textPrimary">
+                          {u.name || 'Sem nome'}
+                        </span>
                         {isSelf && (
-                          <Badge variant="secondary" className="text-xs">
+                          <Badge
+                            variant="secondary"
+                            className="text-xs bg-white/[0.05] text-brand-textSecondary border border-brand-border"
+                          >
                             Você
                           </Badge>
                         )}
                         {isMaster && (
-                          <Badge className="bg-purple-500 hover:bg-purple-600 text-xs">
+                          <Badge className="bg-brand-primarySoft text-brand-primary border border-brand-primary/40 hover:bg-brand-primarySoft text-xs">
                             Master
                           </Badge>
                         )}
                       </div>
-                      <div className="text-sm text-muted-foreground">{u.email}</div>
+                      <div className="text-sm text-brand-textMuted">{u.email}</div>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-brand-textPrimary">
                       <div className="flex items-center gap-1.5">
                         {u.role === 'superadmin' ? (
                           <>
-                            <ShieldCheck className="h-4 w-4 text-purple-600" /> Superadmin
+                            <ShieldCheck className="h-4 w-4 text-brand-primary" /> Superadmin
                           </>
                         ) : (
                           <>
-                            <Shield className="h-4 w-4 text-blue-600" /> Admin
+                            <Shield className="h-4 w-4 text-brand-textSecondary" /> Admin
                           </>
                         )}
                       </div>
                     </TableCell>
                     <TableCell>
                       <Badge
-                        variant={u.isActive ? 'default' : 'secondary'}
-                        className={u.isActive ? 'bg-green-500 hover:bg-green-600' : ''}
+                        className={
+                          u.isActive
+                            ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20'
+                            : 'bg-white/[0.05] text-brand-textMuted border border-brand-border'
+                        }
                       >
                         {u.isActive ? 'Ativo' : 'Inativo'}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <Button variant="ghost" size="icon" asChild>
+                      <div className="flex items-center justify-end gap-1">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          asChild
+                          className="hover:bg-white/[0.06]"
+                        >
                           <Link to={`/admin/usuarios/${u.id}`}>
-                            <Pencil className="h-4 w-4" />
+                            <Pencil className="h-4 w-4 text-brand-primary" />
                           </Link>
                         </Button>
                         <Button
@@ -164,11 +188,12 @@ export default function UserList() {
                           disabled={!canModify}
                           onClick={() => openDialog(u, 'toggle')}
                           title={u.isActive ? 'Desativar' : 'Reativar'}
+                          className="hover:bg-white/[0.06] disabled:opacity-30"
                         >
                           {u.isActive ? (
-                            <PowerOff className="h-4 w-4 text-orange-500" />
+                            <PowerOff className="h-4 w-4 text-amber-400" />
                           ) : (
-                            <Power className="h-4 w-4 text-green-500" />
+                            <Power className="h-4 w-4 text-emerald-400" />
                           )}
                         </Button>
                         <Button
@@ -176,8 +201,9 @@ export default function UserList() {
                           size="icon"
                           disabled={!canModify}
                           onClick={() => openDialog(u, 'delete')}
+                          className="hover:bg-red-500/10 disabled:opacity-30"
                         >
-                          <Trash2 className="h-4 w-4 text-red-500" />
+                          <Trash2 className="h-4 w-4 text-red-400" />
                         </Button>
                       </div>
                     </TableCell>
