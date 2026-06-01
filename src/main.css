@@ -6,103 +6,99 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 97%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 97%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 97%;
 
-    --primary: 222.2 84% 4.9%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 245 84% 60%;
+    --primary-foreground: 0 0% 97%;
 
-    --secondary: 210 40% 98%;
-    --secondary-foreground: 222.2 84% 4.9%;
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 97%;
 
-    --muted: 210 40% 98%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 63%;
 
-    --accent: 210 40% 98%;
-    --accent-foreground: 222.2 84% 4.9%;
+    --accent: 0 0% 20%;
+    --accent-foreground: 0 0% 97%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 97%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 97%;
 
-    --radius: 0.5rem;
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 0%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 222.2 84% 4.9%;
-    --sidebar-primary: 222.2 84% 4.9%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 98%;
-    --sidebar-accent-foreground: 222.2 84% 4.9%;
-    --sidebar-border: 214.3 31.8% 91.4%;
-    --sidebar-ring: 222.2 84% 4.9%;
+    --border: 0 0% 20%;
+    --input: 0 0% 10%;
+    --ring: 245 84% 60%;
 
-    --chart-1: 34 100% 44%;
-    --chart-2: 189 100% 38%;
-    --chart-3: 209 100% 32%;
-    --chart-4: 42 100% 50%;
-    --chart-5: 33 100% 50%;
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 97%;
+    --sidebar-primary: 245 84% 60%;
+    --sidebar-primary-foreground: 0 0% 97%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 0 0% 97%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 245 84% 60%;
+
+    --chart-1: 245 84% 60%;
+    --chart-2: 262 83% 58%;
+    --chart-3: 142 76% 36%;
+    --chart-4: 45 93% 47%;
+    --chart-5: 0 84% 60%;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 84% 4.9%;
-
-    --secondary: 222.2 84% 4.9%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 222.2 84% 4.9%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 222.2 84% 4.9%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 222.2 84% 4.9%;
-    --input: 222.2 84% 4.9%;
-    --ring: 214.3 31.8% 91.4%;
-    --sidebar-background: 222.2 84% 4.9%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 222.2 84% 4.9%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 222.2 84% 4.9%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 222.2 84% 4.9%;
-    --sidebar-ring: 222.2 84% 4.9%;
-
-    --chart-1: 270 100% 44%;
-    --chart-2: 164 100% 38%;
-    --chart-3: 43 100% 32%;
-    --chart-4: 340 100% 50%;
-    --chart-5: 10 100% 50%;
+  html {
+    color-scheme: dark;
   }
 
   body {
     @apply bg-brand-bg text-brand-textPrimary antialiased min-h-screen selection:bg-brand-primary selection:text-white;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 
   section[aria-label='Notifications alt+T'] {
     padding: 0 !important;
     margin: 0 !important;
+  }
+}
+
+@layer components {
+  .brand-glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .brand-glow::before {
+    content: '';
+    position: absolute;
+    inset: -40% -20% auto auto;
+    width: min(36rem, 70vw);
+    height: min(36rem, 70vw);
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.18), transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .brand-glow::after {
+    content: '';
+    position: absolute;
+    inset: auto auto -30% -20%;
+    width: min(32rem, 70vw);
+    height: min(32rem, 70vw);
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.14), transparent 70%);
+    filter: blur(90px);
+    pointer-events: none;
+    z-index: -1;
   }
 }
 

@@ -182,22 +182,27 @@ export default function QuestionList() {
     .filter((cat) => cat.questions.length > 0)
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-5xl">
+    <div className="container mx-auto py-8 px-4 max-w-5xl text-brand-textPrimary">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold text-slate-900">Gerenciar FAQ</h1>
-        <Button onClick={() => navigate('/admin/perguntas/nova')}>
+        <h1 className="text-3xl font-bold text-brand-textPrimary tracking-tight">
+          Gerenciar FAQ
+        </h1>
+        <Button
+          onClick={() => navigate('/admin/perguntas/nova')}
+          className="bg-brand-primary hover:bg-brand-primaryHover text-white shadow-glow"
+        >
           <Plus className="mr-2 h-4 w-4" /> Nova Pergunta
         </Button>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-brand-textMuted" />
           <Input
             placeholder="Buscar perguntas ou respostas..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10"
+            className="pl-10 bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
           />
         </div>
         <Select value={categoryFilter} onValueChange={setCategoryFilter}>
@@ -226,16 +231,16 @@ export default function QuestionList() {
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-slate-500">Carregando...</div>
+        <div className="text-center py-12 text-brand-textMuted">Carregando...</div>
       ) : groupedQuestions.length === 0 ? (
-        <div className="text-center py-12 border rounded-lg bg-slate-50 border-slate-200">
-          <p className="text-slate-500">Nenhuma pergunta encontrada.</p>
+        <div className="text-center py-12 border border-brand-border rounded-xl bg-white/[0.03]">
+          <p className="text-brand-textMuted">Nenhuma pergunta encontrada.</p>
         </div>
       ) : (
         <div className="space-y-8">
           {groupedQuestions.map((category) => (
             <div key={category.id} className="space-y-4">
-              <h2 className="text-xl font-semibold text-slate-800 border-b pb-2">
+              <h2 className="text-xl font-semibold text-brand-textPrimary border-b border-brand-border pb-2">
                 {category.label}
               </h2>
               <div className="space-y-2">
@@ -248,47 +253,62 @@ export default function QuestionList() {
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, q.id, category.id)}
                     onDragEnd={handleDragEnd}
-                    className="flex items-center gap-4 p-4 bg-white border rounded-lg shadow-sm hover:shadow-md transition-all cursor-move group"
+                    className="flex items-center gap-4 p-4 bg-white/[0.03] border border-brand-border rounded-xl hover:bg-white/[0.06] hover:border-brand-primary/30 transition-all cursor-move group"
                   >
-                    <div className="text-slate-400 opacity-50 group-hover:opacity-100 transition-opacity">
+                    <div className="text-brand-textMuted opacity-50 group-hover:opacity-100 transition-opacity">
                       <GripVertical className="h-5 w-5" />
                     </div>
 
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-slate-900 truncate">{q.question}</h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Badge variant={q.status === 'published' ? 'default' : 'secondary'}>
+                      <h3 className="font-medium text-brand-textPrimary truncate">
+                        {q.question}
+                      </h3>
+                      <div className="flex items-center gap-2 mt-1.5">
+                        <Badge
+                          className={
+                            q.status === 'published'
+                              ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20'
+                              : 'bg-amber-500/15 text-amber-400 border border-amber-500/30 hover:bg-amber-500/20'
+                          }
+                        >
                           {q.status === 'published' ? 'Publicado' : 'Rascunho'}
                         </Badge>
-                        <Badge variant="outline">{q.priority || 'Média'}</Badge>
+                        <Badge
+                          variant="outline"
+                          className="border-brand-border text-brand-textSecondary"
+                        >
+                          {q.priority || 'Média'}
+                        </Badge>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                       <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => handleToggleStatus(q)}
                         disabled={processingId === q.id}
+                        className="hover:bg-white/[0.06]"
                       >
                         {q.status === 'published' ? (
-                          <Eye className="h-4 w-4 text-slate-600" />
+                          <Eye className="h-4 w-4 text-emerald-400" />
                         ) : (
-                          <EyeOff className="h-4 w-4 text-slate-400" />
+                          <EyeOff className="h-4 w-4 text-brand-textMuted" />
                         )}
                       </Button>
                       <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => navigate(`/admin/perguntas/${q.id}`)}
+                        className="hover:bg-white/[0.06]"
                       >
-                        <Pencil className="h-4 w-4 text-blue-600" />
+                        <Pencil className="h-4 w-4 text-brand-primary" />
                       </Button>
 
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button variant="ghost" size="icon">
-                            <Trash className="h-4 w-4 text-red-600" />
+                          <Button variant="ghost" size="icon" className="hover:bg-red-500/10">
+                            <Trash className="h-4 w-4 text-red-400" />
                           </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>

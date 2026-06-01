@@ -115,29 +115,32 @@ export default function CategoryForm() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-muted/20 bg-brand-bg">
-      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border border-brand-border bg-background bg-brand-surface px-6 shadow-sm">
-        <Button variant="ghost" size="icon" asChild>
+    <div className="flex flex-col min-h-screen bg-brand-bg text-brand-textPrimary">
+      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-brand-border bg-brand-bg/60 backdrop-blur-xl px-6">
+        <Button
+          variant="ghost"
+          size="icon"
+          asChild
+          className="text-brand-textPrimary hover:bg-white/[0.06]"
+        >
           <Link to="/admin/categorias">
             <ArrowLeft className="h-5 w-5" />
           </Link>
         </Button>
-        <div className="font-semibold text-lg text-foreground text-brand-textPrimary">
+        <div className="font-semibold text-lg text-brand-textPrimary">
           {isEditing ? 'Editar Categoria' : 'Nova Categoria'}
         </div>
       </header>
 
       <main className="flex-1 p-6 md:p-8">
         <div className="mx-auto max-w-2xl">
-          <Card className="bg-card bg-brand-surface border-border border-brand-border">
+          <Card className="bg-white/[0.03] border-brand-border backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="text-brand-textPrimary">Detalhes da Categoria</CardTitle>
             </CardHeader>
             <CardContent>
               {isLoading ? (
-                <div className="text-center py-10 text-muted-foreground text-brand-textMuted">
-                  Carregando...
-                </div>
+                <div className="text-center py-10 text-brand-textMuted">Carregando...</div>
               ) : (
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -152,7 +155,7 @@ export default function CategoryForm() {
                           <FormControl>
                             <Input
                               placeholder="Ex: Pagamentos"
-                              className="border-brand-border"
+                              className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
                               {...field}
                               onChange={(e) => {
                                 field.onChange(e)
@@ -178,7 +181,7 @@ export default function CategoryForm() {
                           <FormControl>
                             <Input
                               placeholder="ex-pagamentos"
-                              className="font-mono border-brand-border"
+                              className="font-mono bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
                               {...field}
                               onChange={(e) => {
                                 field.onChange(e)
@@ -200,7 +203,7 @@ export default function CategoryForm() {
                           <FormControl>
                             <Input
                               placeholder="Nome do ícone Lucide"
-                              className="border-brand-border"
+                              className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
                               {...field}
                             />
                           </FormControl>
@@ -209,14 +212,20 @@ export default function CategoryForm() {
                       )}
                     />
 
-                    <div className="flex items-center justify-end gap-4 pt-4">
-                      <Button variant="outline" type="button" asChild disabled={isSaving}>
+                    <div className="flex items-center justify-end gap-3 pt-4 border-t border-brand-border">
+                      <Button
+                        variant="outline"
+                        type="button"
+                        asChild
+                        disabled={isSaving}
+                        className="bg-white/[0.03] border-brand-border text-brand-textPrimary hover:bg-white/[0.06]"
+                      >
                         <Link to="/admin/categorias">Cancelar</Link>
                       </Button>
                       <Button
                         type="submit"
                         disabled={isSaving}
-                        className="bg-primary bg-brand-primary hover:bg-primary/90 hover:bg-brand-primaryHover"
+                        className="bg-brand-primary hover:bg-brand-primaryHover text-white shadow-glow"
                       >
                         {isSaving ? 'Salvando...' : 'Salvar Categoria'}
                         <Save className="h-4 w-4 ml-2" />

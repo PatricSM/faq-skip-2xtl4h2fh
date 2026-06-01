@@ -97,20 +97,25 @@ export default function CategoryList() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-muted/20 bg-brand-bg">
-      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border border-brand-border bg-background bg-brand-surface px-6 shadow-sm">
-        <Button variant="ghost" size="icon" asChild>
+    <div className="flex flex-col min-h-screen bg-brand-bg text-brand-textPrimary">
+      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-brand-border bg-brand-bg/60 backdrop-blur-xl px-6">
+        <Button
+          variant="ghost"
+          size="icon"
+          asChild
+          className="text-brand-textPrimary hover:bg-white/[0.06]"
+        >
           <Link to="/admin">
             <ArrowLeft className="h-5 w-5" />
           </Link>
         </Button>
-        <div className="font-semibold text-lg text-foreground text-brand-textPrimary">
+        <div className="font-semibold text-lg text-brand-textPrimary">
           Categorias FAQ
         </div>
         <div className="ml-auto">
           <Button
             asChild
-            className="bg-primary bg-brand-primary hover:bg-primary/90 hover:bg-brand-primaryHover"
+            className="bg-brand-primary hover:bg-brand-primaryHover text-white shadow-glow"
           >
             <Link to="/admin/categorias/nova">
               <Plus className="h-4 w-4 mr-2" />
@@ -121,27 +126,27 @@ export default function CategoryList() {
       </header>
 
       <main className="flex-1 p-6 md:p-8">
-        <div className="mx-auto max-w-4xl space-y-4">
+        <div className="mx-auto max-w-4xl space-y-3">
           {isLoading ? (
-            <div className="text-center py-10 text-muted-foreground text-brand-textMuted">
+            <div className="text-center py-10 text-brand-textMuted">
               Carregando...
             </div>
           ) : categories.length === 0 ? (
-            <div className="text-center py-10 text-muted-foreground text-brand-textMuted">
+            <div className="text-center py-10 text-brand-textMuted">
               Nenhuma categoria encontrada.
             </div>
           ) : (
             categories.map((cat, idx) => (
               <Card
                 key={cat.id}
-                className="bg-card bg-brand-surface border-border border-brand-border"
+                className="bg-white/[0.03] border-brand-border hover:border-brand-primary/30 transition-colors"
               >
                 <CardContent className="p-4 flex items-center gap-4">
                   <div className="flex flex-col gap-1 mr-4">
                     <Button
                       variant="outline"
                       size="icon"
-                      className="h-8 w-8"
+                      className="h-8 w-8 bg-white/[0.03] border-brand-border text-brand-textPrimary hover:bg-white/[0.08] disabled:opacity-40"
                       disabled={idx === 0 || isSaving}
                       onClick={() => handleReorder(idx, 'up')}
                     >
@@ -150,7 +155,7 @@ export default function CategoryList() {
                     <Button
                       variant="outline"
                       size="icon"
-                      className="h-8 w-8"
+                      className="h-8 w-8 bg-white/[0.03] border-brand-border text-brand-textPrimary hover:bg-white/[0.08] disabled:opacity-40"
                       disabled={idx === categories.length - 1 || isSaving}
                       onClick={() => handleReorder(idx, 'down')}
                     >
@@ -159,21 +164,29 @@ export default function CategoryList() {
                   </div>
 
                   <div className="flex-1 flex flex-col items-start">
-                    <div className="font-medium text-lg text-foreground text-brand-textPrimary">
+                    <div className="font-medium text-lg text-brand-textPrimary">
                       {cat.label}
                     </div>
                     <div className="flex items-center gap-2 mt-1">
-                      <Badge variant="secondary" className="font-mono text-xs">
+                      <Badge
+                        variant="secondary"
+                        className="font-mono text-xs bg-white/[0.05] text-brand-textSecondary border border-brand-border"
+                      >
                         {cat.slug}
                       </Badge>
-                      <span className="text-sm text-muted-foreground text-brand-textSecondary">
+                      <span className="text-sm text-brand-textSecondary">
                         {cat.count} {cat.count === 1 ? 'pergunta' : 'perguntas'}
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" asChild>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      asChild
+                      className="text-brand-primary hover:bg-white/[0.06]"
+                    >
                       <Link to={`/admin/categorias/${cat.id}`}>
                         <Edit className="h-4 w-4" />
                       </Link>
@@ -181,7 +194,7 @@ export default function CategoryList() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                      className="text-red-400 hover:text-red-400 hover:bg-red-500/10 disabled:opacity-30"
                       disabled={cat.count > 0 || isSaving}
                       onClick={() => {
                         if (cat.count > 0) {

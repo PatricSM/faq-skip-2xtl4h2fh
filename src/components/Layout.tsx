@@ -3,14 +3,24 @@ import { HelpCircle } from 'lucide-react'
 
 export default function Layout() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-brand-bg/80 border-b border-brand-border">
+    <div className="relative flex flex-col min-h-screen overflow-x-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 -z-10"
+      >
+        <div className="absolute -left-[20%] -top-[15%] h-[40rem] w-[40rem] rounded-full bg-brand-primary/[0.18] blur-[100px]" />
+        <div className="absolute -right-[18%] top-[10%] h-[36rem] w-[36rem] rounded-full bg-brand-accent/[0.14] blur-[90px]" />
+        <div className="absolute bottom-[-10%] left-1/2 h-[28rem] w-[44rem] -translate-x-1/2 rounded-full bg-indigo-500/[0.08] blur-[110px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_60%_at_50%_-10%,rgba(79,70,229,0.10),transparent_60%)]" />
+      </div>
+
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-brand-bg/60 border-b border-brand-border">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between max-w-5xl">
           <Link
             to="/"
             className="flex items-center gap-3 group transition-opacity hover:opacity-90"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-primary to-purple-600 flex items-center justify-center shadow-lg shadow-brand-primary/20">
+            <div className="w-9 h-9 rounded-xl bg-brand-gradient flex items-center justify-center shadow-glow">
               <HelpCircle className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-lg text-brand-textPrimary tracking-tight">
@@ -32,7 +42,7 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer className="border-t border-brand-border bg-brand-bg mt-auto">
+      <footer className="border-t border-brand-border bg-brand-bg/60 backdrop-blur-md mt-auto">
         <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4 max-w-5xl">
           <p className="text-brand-textSecondary text-sm text-center md:text-left font-medium">
             FAQ Skip — Perguntas frequentes da plataforma

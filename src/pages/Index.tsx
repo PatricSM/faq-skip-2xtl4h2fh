@@ -79,15 +79,18 @@ export default function Index() {
   return (
     <div className="container mx-auto px-4 py-12 md:py-20 max-w-4xl flex flex-col flex-1">
       <div className="flex flex-col items-center text-center mb-16 animate-fade-in-up">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-surface border border-brand-border mb-8 shadow-sm">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-primarySoft border border-brand-primary/30 mb-8">
           <Sparkles className="w-4 h-4 text-brand-primary" />
-          <span className="text-xs font-semibold text-brand-textSecondary uppercase tracking-wider">
+          <span className="text-xs font-semibold text-brand-textPrimary uppercase tracking-wider">
             Plataforma de Perguntas Frequentes
           </span>
         </div>
 
         <h1 className="text-4xl md:text-6xl font-extrabold text-brand-textPrimary tracking-tight mb-6 max-w-3xl leading-tight">
-          Como podemos <span className="text-brand-primary">ajudar?</span>
+          Como podemos{' '}
+          <span className="bg-brand-gradient bg-clip-text text-transparent">
+            ajudar?
+          </span>
         </h1>
 
         <p className="text-lg md:text-xl text-brand-textSecondary max-w-2xl mx-auto font-medium leading-relaxed">
@@ -103,7 +106,7 @@ export default function Index() {
         <Input
           type="text"
           placeholder="Buscar por palavra-chave..."
-          className="pl-12 h-14 bg-brand-surface border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted rounded-xl text-lg focus-visible:ring-brand-primary"
+          className="pl-12 h-14 bg-white/[0.03] border border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted rounded-xl text-lg focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:border-brand-primary/40 transition-colors"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -125,10 +128,10 @@ export default function Index() {
               <button
                 onClick={() => setSelectedCategory(null)}
                 className={cn(
-                  'px-4 py-2 rounded-full text-sm font-medium transition-colors border',
+                  'px-4 py-2 rounded-full text-sm font-medium transition-all border',
                   selectedCategory === null
-                    ? 'bg-brand-primary border-brand-primary text-white'
-                    : 'bg-brand-surface border-brand-border text-brand-textSecondary hover:text-brand-textPrimary hover:border-brand-textMuted',
+                    ? 'bg-brand-primarySoft border-brand-primary/40 text-brand-primary'
+                    : 'bg-white/[0.03] border-brand-border text-brand-textSecondary hover:text-brand-textPrimary hover:border-white/15',
                 )}
               >
                 Todas
@@ -138,10 +141,10 @@ export default function Index() {
                   key={c.id}
                   onClick={() => setSelectedCategory(c.id)}
                   className={cn(
-                    'px-4 py-2 rounded-full text-sm font-medium transition-colors border',
+                    'px-4 py-2 rounded-full text-sm font-medium transition-all border',
                     selectedCategory === c.id
-                      ? 'bg-brand-primary border-brand-primary text-white'
-                      : 'bg-brand-surface border-brand-border text-brand-textSecondary hover:text-brand-textPrimary hover:border-brand-textMuted',
+                      ? 'bg-brand-primarySoft border-brand-primary/40 text-brand-primary'
+                      : 'bg-white/[0.03] border-brand-border text-brand-textSecondary hover:text-brand-textPrimary hover:border-white/15',
                   )}
                 >
                   {c.label}
@@ -163,16 +166,16 @@ export default function Index() {
                     <h2 className="text-2xl font-bold text-brand-textPrimary">
                       {group.category.label}
                     </h2>
-                    <span className="bg-brand-surface text-brand-textSecondary text-xs font-semibold px-2.5 py-1 rounded-full border border-brand-border">
+                    <span className="bg-white/[0.04] text-brand-textSecondary text-xs font-semibold px-2.5 py-1 rounded-full border border-brand-border">
                       {group.questions.length}
                     </span>
                   </div>
-                  <Accordion type="multiple" className="space-y-4">
+                  <Accordion type="multiple" className="space-y-3">
                     {group.questions.map((q) => (
                       <AccordionItem
                         key={q.id}
                         value={q.id}
-                        className="bg-brand-surface border border-brand-border rounded-xl px-6 data-[state=open]:border-brand-primary/40 transition-colors overflow-hidden"
+                        className="bg-white/[0.03] border border-brand-border rounded-xl px-6 data-[state=open]:border-brand-primary/40 data-[state=open]:bg-brand-primarySoft/30 transition-all overflow-hidden"
                       >
                         <AccordionTrigger className="text-left text-brand-textPrimary hover:no-underline hover:text-brand-primary transition-colors py-5">
                           {q.question}
