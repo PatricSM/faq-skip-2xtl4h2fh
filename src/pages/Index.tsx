@@ -92,7 +92,7 @@ export default function Index() {
         </h1>
 
         <p className="text-lg md:text-xl text-brand-textSecondary max-w-2xl mx-auto font-medium leading-relaxed">
-          Respostas validadas para as perguntas mais frequentes sobre o Skip Cloud.
+          Respostas validadas para as perguntas mais frequentes sobre o Skip .
         </p>
       </div>
 

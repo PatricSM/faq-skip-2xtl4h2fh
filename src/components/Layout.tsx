@@ -1,6 +1,10 @@
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useLocation } from 'react-router-dom'
+import { ChatWidget } from '@/components/ChatWidget'
 
 export default function Layout() {
+  const location = useLocation()
+  const showChat = !location.pathname.startsWith('/admin') && location.pathname !== '/login'
+
   return (
     <div className="relative flex flex-col min-h-screen overflow-x-hidden">
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
@@ -57,6 +61,7 @@ export default function Layout() {
           </a>
         </div>
       </footer>
+      {showChat && <ChatWidget />}
     </div>
   )
 }
