@@ -182,11 +182,9 @@ export default function QuestionList() {
     .filter((cat) => cat.questions.length > 0)
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-5xl text-brand-textPrimary">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold text-brand-textPrimary tracking-tight">
-          Gerenciar FAQ
-        </h1>
+    <div className="p-6 md:p-8 max-w-5xl mx-auto w-full space-y-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h1 className="text-2xl font-bold text-brand-textPrimary tracking-tight">Gerenciar FAQ</h1>
         <Button
           onClick={() => navigate('/admin/perguntas/nova')}
           className="bg-brand-primary hover:bg-brand-primaryHover text-white shadow-glow"
@@ -195,7 +193,7 @@ export default function QuestionList() {
         </Button>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-brand-textMuted" />
           <Input
@@ -206,7 +204,7 @@ export default function QuestionList() {
           />
         </div>
         <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-          <SelectTrigger className="w-full sm:w-[200px]">
+          <SelectTrigger className="w-full sm:w-[200px] bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary">
             <SelectValue placeholder="Categoria" />
           </SelectTrigger>
           <SelectContent>
@@ -219,7 +217,7 @@ export default function QuestionList() {
           </SelectContent>
         </Select>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-full sm:w-[160px]">
+          <SelectTrigger className="w-full sm:w-[160px] bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
@@ -260,9 +258,7 @@ export default function QuestionList() {
                     </div>
 
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-brand-textPrimary truncate">
-                        {q.question}
-                      </h3>
+                      <h3 className="font-medium text-brand-textPrimary truncate">{q.question}</h3>
                       <div className="flex items-center gap-2 mt-1.5">
                         <Badge
                           className={
@@ -311,19 +307,23 @@ export default function QuestionList() {
                             <Trash className="h-4 w-4 text-red-400" />
                           </Button>
                         </AlertDialogTrigger>
-                        <AlertDialogContent>
+                        <AlertDialogContent className="bg-white/[0.03] border-brand-border">
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Excluir pergunta?</AlertDialogTitle>
-                            <AlertDialogDescription>
+                            <AlertDialogTitle className="text-brand-textPrimary">
+                              Excluir pergunta?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription className="text-brand-textSecondary">
                               Esta ação não pode ser desfeita. Isso excluirá permanentemente a
                               pergunta.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <AlertDialogCancel className="bg-white/[0.03] border-brand-border text-brand-textPrimary hover:bg-white/[0.06]">
+                              Cancelar
+                            </AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => handleDelete(q.id)}
-                              className="bg-red-600 hover:bg-red-700"
+                              className="bg-red-500/15 text-red-400 border border-red-500/30 hover:bg-red-500/20"
                             >
                               {deletingId === q.id ? 'Excluindo...' : 'Excluir'}
                             </AlertDialogAction>

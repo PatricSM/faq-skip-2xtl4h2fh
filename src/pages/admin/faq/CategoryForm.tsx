@@ -17,7 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { extractFieldErrors } from '@/lib/pocketbase/errors'
 
 const categorySchema = z.object({
@@ -115,129 +115,120 @@ export default function CategoryForm() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-brand-bg text-brand-textPrimary">
-      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-brand-border bg-brand-bg/60 backdrop-blur-xl px-6">
+    <div className="p-6 md:p-8 max-w-2xl mx-auto w-full space-y-6">
+      <div className="flex items-center gap-4">
         <Button
           variant="ghost"
           size="icon"
           asChild
-          className="text-brand-textPrimary hover:bg-white/[0.06]"
+          className="text-brand-textSecondary hover:text-brand-textPrimary hover:bg-white/[0.06] -ml-2"
         >
           <Link to="/admin/categorias">
             <ArrowLeft className="h-5 w-5" />
           </Link>
         </Button>
-        <div className="font-semibold text-lg text-brand-textPrimary">
+        <h1 className="text-2xl font-bold text-brand-textPrimary tracking-tight">
           {isEditing ? 'Editar Categoria' : 'Nova Categoria'}
-        </div>
-      </header>
+        </h1>
+      </div>
 
-      <main className="flex-1 p-6 md:p-8">
-        <div className="mx-auto max-w-2xl">
-          <Card className="bg-white/[0.03] border-brand-border backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-brand-textPrimary">Detalhes da Categoria</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <div className="text-center py-10 text-brand-textMuted">Carregando...</div>
-              ) : (
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                      control={form.control}
-                      name="label"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-brand-textPrimary">
-                            Nome (label público)
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Ex: Pagamentos"
-                              className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
-                              {...field}
-                              onChange={(e) => {
-                                field.onChange(e)
-                                if (!slugManuallyEdited && !isEditing) {
-                                  form.setValue('slug', generateSlug(e.target.value), {
-                                    shouldValidate: true,
-                                  })
-                                }
-                              }}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+      <Card className="bg-white/[0.03] border border-brand-border backdrop-blur-sm">
+        <CardContent className="pt-6">
+          {isLoading ? (
+            <div className="text-center py-10 text-brand-textMuted">Carregando...</div>
+          ) : (
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="label"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-brand-textPrimary">Nome (label público)</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Ex: Pagamentos"
+                          className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e)
+                            if (!slugManuallyEdited && !isEditing) {
+                              form.setValue('slug', generateSlug(e.target.value), {
+                                shouldValidate: true,
+                              })
+                            }
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                    <FormField
-                      control={form.control}
-                      name="slug"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-brand-textPrimary">Slug</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="ex-pagamentos"
-                              className="font-mono bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
-                              {...field}
-                              onChange={(e) => {
-                                field.onChange(e)
-                                setSlugManuallyEdited(true)
-                              }}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                <FormField
+                  control={form.control}
+                  name="slug"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-brand-textPrimary">Slug</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="ex-pagamentos"
+                          className="font-mono bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e)
+                            setSlugManuallyEdited(true)
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                    <FormField
-                      control={form.control}
-                      name="icon"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-brand-textPrimary">Ícone (opcional)</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Nome do ícone Lucide"
-                              className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                <FormField
+                  control={form.control}
+                  name="icon"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-brand-textPrimary">Ícone (opcional)</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Nome do ícone Lucide"
+                          className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                    <div className="flex items-center justify-end gap-3 pt-4 border-t border-brand-border">
-                      <Button
-                        variant="outline"
-                        type="button"
-                        asChild
-                        disabled={isSaving}
-                        className="bg-white/[0.03] border-brand-border text-brand-textPrimary hover:bg-white/[0.06]"
-                      >
-                        <Link to="/admin/categorias">Cancelar</Link>
-                      </Button>
-                      <Button
-                        type="submit"
-                        disabled={isSaving}
-                        className="bg-brand-primary hover:bg-brand-primaryHover text-white shadow-glow"
-                      >
-                        {isSaving ? 'Salvando...' : 'Salvar Categoria'}
-                        <Save className="h-4 w-4 ml-2" />
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </main>
+                <div className="flex items-center justify-end gap-3 pt-4 border-t border-brand-border">
+                  <Button
+                    variant="outline"
+                    type="button"
+                    asChild
+                    disabled={isSaving}
+                    className="bg-white/[0.03] border-brand-border text-brand-textPrimary hover:bg-white/[0.06]"
+                  >
+                    <Link to="/admin/categorias">Cancelar</Link>
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={isSaving}
+                    className="bg-brand-primary hover:bg-brand-primaryHover text-white shadow-glow"
+                  >
+                    {isSaving ? 'Salvando...' : 'Salvar Categoria'}
+                    <Save className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          )}
+        </CardContent>
+      </Card>
     </div>
   )
 }

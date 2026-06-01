@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 import {
   fetchCategories,
   getQuestion,
@@ -93,13 +94,23 @@ export default function QuestionForm() {
   }
 
   if (initialLoading) {
-    return <div className="text-center py-12">Carregando...</div>
+    return <div className="text-center py-12 text-brand-textMuted">Carregando...</div>
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-3xl text-brand-textPrimary">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-brand-textPrimary tracking-tight">
+    <div className="p-6 md:p-8 max-w-3xl mx-auto w-full space-y-6">
+      <div className="flex items-center gap-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          asChild
+          className="text-brand-textSecondary hover:text-brand-textPrimary hover:bg-white/[0.06] -ml-2"
+        >
+          <Link to="/admin/perguntas">
+            <ArrowLeft className="h-5 w-5" />
+          </Link>
+        </Button>
+        <h1 className="text-2xl font-bold text-brand-textPrimary tracking-tight">
           {isEditing ? 'Editar Pergunta' : 'Nova Pergunta'}
         </h1>
       </div>
@@ -116,7 +127,7 @@ export default function QuestionForm() {
             value={formData.category}
             onValueChange={(v) => setFormData((prev) => ({ ...prev, category: v }))}
           >
-            <SelectTrigger>
+            <SelectTrigger className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary">
               <SelectValue placeholder="Selecione uma categoria" />
             </SelectTrigger>
             <SelectContent>
@@ -167,7 +178,7 @@ export default function QuestionForm() {
                 setFormData((prev) => ({ ...prev, status: v }))
               }
             >
-              <SelectTrigger>
+              <SelectTrigger className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -185,7 +196,7 @@ export default function QuestionForm() {
               value={formData.priority}
               onValueChange={(v) => setFormData((prev) => ({ ...prev, priority: v }))}
             >
-              <SelectTrigger>
+              <SelectTrigger className="bg-white/[0.04] border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted focus-visible:ring-2 focus-visible:ring-brand-primary">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

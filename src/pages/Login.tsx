@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useLocation, Navigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { Eye, EyeOff, Loader2, ShieldCheck } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -72,9 +72,13 @@ export default function Login() {
       <Card className="relative w-full max-w-md bg-white/[0.03] backdrop-blur-xl border-brand-border shadow-elevation">
         <CardHeader className="space-y-2 text-center pb-6">
           <div className="flex justify-center mb-4">
-            <div className="h-14 w-14 rounded-2xl bg-brand-gradient flex items-center justify-center shadow-glow">
-              <ShieldCheck className="h-7 w-7 text-white" />
-            </div>
+            <img
+              src="/skip.png"
+              alt="Skip"
+              width={56}
+              height={56}
+              className="w-14 h-14 rounded-2xl shadow-glow"
+            />
           </div>
           <CardTitle className="text-2xl font-bold tracking-tight text-brand-textPrimary">
             Login Restrito

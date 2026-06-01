@@ -4,6 +4,13 @@ export default function NotFound() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-4 py-20">
       <div className="text-center animate-fade-in-up">
+        <img
+          src="/skip.png"
+          alt="Skip"
+          width={64}
+          height={64}
+          className="w-16 h-16 rounded-2xl shadow-glow mx-auto mb-6 opacity-80"
+        />
         <h1 className="text-8xl md:text-9xl font-extrabold text-brand-primary mb-4 drop-shadow-sm">
           404
         </h1>

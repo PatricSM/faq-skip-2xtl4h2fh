@@ -1,13 +1,9 @@
 import { Outlet, Link } from 'react-router-dom'
-import { HelpCircle } from 'lucide-react'
 
 export default function Layout() {
   return (
     <div className="relative flex flex-col min-h-screen overflow-x-hidden">
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 -z-10"
-      >
+      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
         <div className="absolute -left-[20%] -top-[15%] h-[40rem] w-[40rem] rounded-full bg-brand-primary/[0.18] blur-[100px]" />
         <div className="absolute -right-[18%] top-[10%] h-[36rem] w-[36rem] rounded-full bg-brand-accent/[0.14] blur-[90px]" />
         <div className="absolute bottom-[-10%] left-1/2 h-[28rem] w-[44rem] -translate-x-1/2 rounded-full bg-indigo-500/[0.08] blur-[110px]" />
@@ -20,9 +16,13 @@ export default function Layout() {
             to="/"
             className="flex items-center gap-3 group transition-opacity hover:opacity-90"
           >
-            <div className="w-9 h-9 rounded-xl bg-brand-gradient flex items-center justify-center shadow-glow">
-              <HelpCircle className="w-5 h-5 text-white" />
-            </div>
+            <img
+              src="/skip.png"
+              alt="Skip"
+              width={36}
+              height={36}
+              className="w-9 h-9 rounded-xl shadow-glow"
+            />
             <span className="font-bold text-lg text-brand-textPrimary tracking-tight">
               FAQ Skip
             </span>

@@ -88,9 +88,7 @@ export default function Index() {
 
         <h1 className="text-4xl md:text-6xl font-extrabold text-brand-textPrimary tracking-tight mb-6 max-w-3xl leading-tight">
           Como podemos{' '}
-          <span className="bg-brand-gradient bg-clip-text text-transparent">
-            ajudar?
-          </span>
+          <span className="bg-brand-gradient bg-clip-text text-transparent">ajudar?</span>
         </h1>
 
         <p className="text-lg md:text-xl text-brand-textSecondary max-w-2xl mx-auto font-medium leading-relaxed">

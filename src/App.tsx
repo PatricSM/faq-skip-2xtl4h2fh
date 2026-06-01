@@ -16,6 +16,7 @@ import UserForm from './pages/admin/users/UserForm'
 import LogList from './pages/admin/logs/LogList'
 import { AuthProvider } from './hooks/use-auth'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { AdminLayout } from './components/AdminLayout'
 
 const App = () => (
   <AuthProvider>
@@ -27,17 +28,19 @@ const App = () => (
           <Route path="/login" element={<Login />} />
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/perguntas" element={<QuestionList />} />
-            <Route path="/admin/perguntas/nova" element={<QuestionForm />} />
-            <Route path="/admin/perguntas/:id" element={<QuestionForm />} />
-            <Route path="/admin/categorias" element={<CategoryList />} />
-            <Route path="/admin/categorias/nova" element={<CategoryForm />} />
-            <Route path="/admin/categorias/:id" element={<CategoryForm />} />
-            <Route path="/admin/usuarios" element={<UserList />} />
-            <Route path="/admin/usuarios/novo" element={<UserForm />} />
-            <Route path="/admin/usuarios/:id" element={<UserForm />} />
-            <Route path="/admin/logs" element={<LogList />} />
+            <Route element={<AdminLayout />}>
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/perguntas" element={<QuestionList />} />
+              <Route path="/admin/perguntas/nova" element={<QuestionForm />} />
+              <Route path="/admin/perguntas/:id" element={<QuestionForm />} />
+              <Route path="/admin/categorias" element={<CategoryList />} />
+              <Route path="/admin/categorias/nova" element={<CategoryForm />} />
+              <Route path="/admin/categorias/:id" element={<CategoryForm />} />
+              <Route path="/admin/usuarios" element={<UserList />} />
+              <Route path="/admin/usuarios/novo" element={<UserForm />} />
+              <Route path="/admin/usuarios/:id" element={<UserForm />} />
+              <Route path="/admin/logs" element={<LogList />} />
+            </Route>
           </Route>
 
           <Route element={<Layout />}>
