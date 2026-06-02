@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T20:15:59.635Z",
+  "generatedAt": "2026-06-02T21:07:38.174Z",
   "collections": [
     {
       "name": "users",
@@ -235,6 +235,159 @@
         }
       ],
       "indexes": []
+    },
+    {
+      "name": "drops",
+      "type": "base",
+      "apiRules": {
+        "list": "is_published = true || @request.auth.role = 'admin' || @request.auth.role = 'superadmin'",
+        "view": "is_published = true || @request.auth.role = 'admin' || @request.auth.role = 'superadmin'",
+        "create": "@request.auth.role = 'admin' || @request.auth.role = 'superadmin'",
+        "update": "@request.auth.role = 'admin' || @request.auth.role = 'superadmin'",
+        "delete": "@request.auth.role = 'admin' || @request.auth.role = 'superadmin'"
+      },
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "video_url",
+          "type": "url",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "video_id",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "category",
+          "type": "relation",
+          "required": false,
+          "system": false,
+          "collectionRef": "categories"
+        },
+        {
+          "name": "duration_seconds",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "thumbnail_url",
+          "type": "url",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "order",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "is_published",
+          "type": "bool",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "views",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE UNIQUE INDEX idx_drops_slug ON drops (slug)",
+        "CREATE UNIQUE INDEX idx_drops_video_id ON drops (video_id)",
+        "CREATE INDEX idx_drops_category ON drops (category)",
+        "CREATE INDEX idx_drops_order ON drops (`order`)",
+        "CREATE INDEX idx_drops_is_published ON drops (is_published)"
+      ]
+    },
+    {
+      "name": "question_drops",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "@request.auth.role = 'admin' || @request.auth.role = 'superadmin'",
+        "update": "@request.auth.role = 'admin' || @request.auth.role = 'superadmin'",
+        "delete": "@request.auth.role = 'admin' || @request.auth.role = 'superadmin'"
+      },
+      "fields": [
+        {
+          "name": "question",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "questions"
+        },
+        {
+          "name": "drop",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "drops"
+        },
+        {
+          "name": "order",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_question_drops_question ON question_drops (question)",
+        "CREATE INDEX idx_question_drops_drop ON question_drops (drop)",
+        "CREATE UNIQUE INDEX idx_question_drops_question_drop ON question_drops (question, drop)"
+      ]
     }
   ]
 }

@@ -1,5 +1,13 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { LayoutDashboard, FileQuestion, Tags, Users, Activity, LogOut } from 'lucide-react'
+import {
+  LayoutDashboard,
+  FileQuestion,
+  Tags,
+  PlayCircle,
+  Users,
+  Activity,
+  LogOut,
+} from 'lucide-react'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -8,6 +16,7 @@ const navItems = [
   { to: '/admin', icon: LayoutDashboard, label: 'Painel', end: true },
   { to: '/admin/perguntas', icon: FileQuestion, label: 'Perguntas' },
   { to: '/admin/categorias', icon: Tags, label: 'Categorias' },
+  { to: '/admin/drops', icon: PlayCircle, label: 'Drops' },
   { to: '/admin/usuarios', icon: Users, label: 'Usuários' },
   { to: '/admin/logs', icon: Activity, label: 'Logs' },
 ]

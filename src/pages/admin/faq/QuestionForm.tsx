@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
+import { QuestionDropsLinker } from '@/components/admin/QuestionDropsLinker'
 
 export default function QuestionForm() {
   const { id } = useParams()
@@ -227,6 +228,12 @@ export default function QuestionForm() {
           </Button>
         </div>
       </form>
+
+      {isEditing && id && (
+        <div className="mt-8 pt-8 border-t border-brand-border">
+          <QuestionDropsLinker questionId={id} />
+        </div>
+      )}
     </div>
   )
 }

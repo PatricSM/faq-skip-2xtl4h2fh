@@ -1,5 +1,6 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { ChatWidget } from '@/components/ChatWidget'
+import { PlayCircle } from 'lucide-react'
 
 export default function Layout() {
   const location = useLocation()
@@ -31,7 +32,21 @@ export default function Layout() {
               FAQ Skip
             </span>
           </Link>
-          <nav>
+          <nav className="flex items-center gap-6">
+            <Link
+              to="/"
+              className="text-brand-textSecondary hover:text-brand-textPrimary transition-colors duration-200 text-sm font-medium"
+            >
+              FAQ
+            </Link>
+            <Link
+              to="/drops"
+              className="flex items-center gap-1.5 text-brand-textSecondary hover:text-brand-textPrimary transition-colors duration-200 text-sm font-medium"
+            >
+              <PlayCircle className="w-4 h-4" />
+              Drops
+            </Link>
+            <div className="w-px h-4 bg-brand-border" />
             <Link
               to="/login"
               className="text-brand-textSecondary hover:text-brand-textPrimary transition-colors duration-200 text-sm font-medium"
