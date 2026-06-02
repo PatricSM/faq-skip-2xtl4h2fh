@@ -34,7 +34,13 @@ routerAdd('POST', '/backend/v1/chat_skip_support', (e) => {
         contextText = searchRes.items.map((item, i) => `[${i + 1}] ${item.text}`).join('\n\n')
       }
 
-      const systemPrompt = `Você é o Assistente de Suporte FAQ Skip — atende em primeiro nível usando apenas a base de perguntas e respostas oficiais do Skip. Resolve dúvidas comuns, identifica quando precisa escalar, e direciona casos não cobertos ou frustrações para o e-mail de suporte humano (duvidas@adapta.org), sempre orientando o usuário a enviar contexto suficiente (prints, e-mail de login, projeto). Cite as fontes no formato [n] se aplicável.\n\nContexto:\n${contextText}`
+      const systemPrompt = `Você é o Assistente de Suporte FAQ Skip — atende em primeiro nível usando apenas a base de perguntas e respostas oficiais do Skip.
+Responda usando APENAS a base de dados de FAQ (questions, categories). Se a pergunta for sobre um assunto não encontrado na base, oriente o usuário a enviar um e-mail para duvidas@adapta.org com contexto suficiente (prints, e-mail de login, projeto).
+Se a pergunta correspondente possuir um vídeo associado em question_drops, sugira o vídeo AO FINAL da resposta usando EXATAMENTE este formato: '📺 Veja também o vídeo: [TÍTULO DO DROP](/drops/SLUG_DO_DROP)'. Utilize o slug do drop para formar a URL interna. Sugira no máximo 2 vídeos por resposta.
+Cite as fontes no formato [n] se aplicável.
+
+Contexto:
+${contextText}`
 
       const messages = [{ role: 'system', content: systemPrompt }]
 
