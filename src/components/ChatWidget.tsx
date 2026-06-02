@@ -136,7 +136,7 @@ export function ChatWidget() {
         )}
       >
         <MessageCircle className="h-6 w-6" />
-        <span className="font-medium hidden sm:inline">Falar com suporte</span>
+        <span className="font-medium hidden sm:inline">Ajuda</span>
       </button>
 
       {isOpen && (

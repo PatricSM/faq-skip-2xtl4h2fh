@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
 import { Sparkles, Search, FileQuestion, Loader2 } from 'lucide-react'
 import {
   Accordion,
@@ -7,6 +7,13 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { fetchPublishedQuestions, Category, Question } from '@/services/faq'
 import { useDebounce } from '@/hooks/use-debounce'
 import { cn } from '@/lib/utils'
@@ -19,6 +26,16 @@ export default function Index() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
   const debouncedSearch = useDebounce(searchTerm, 300)
+  const resultsRef = useRef<HTMLDivElement>(null)
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else if (e.key === 'Escape') {
+      setSearchTerm('')
+    }
+  }
 
   useEffect(() => {
     const loadData = async () => {
@@ -97,17 +114,36 @@ export default function Index() {
       </div>
 
       <div
-        className="relative w-full max-w-2xl mx-auto mb-10 animate-fade-in-up"
+        className="flex flex-col md:flex-row gap-3 w-full max-w-3xl mx-auto mb-10 animate-fade-in-up"
         style={{ animationDelay: '100ms' }}
       >
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-textMuted" />
-        <Input
-          type="text"
-          placeholder="Buscar por palavra-chave..."
-          className="pl-12 h-14 bg-white/[0.03] border border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted rounded-xl text-lg focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:border-brand-primary/40 transition-colors"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <div className="relative flex-1">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-textMuted pointer-events-none" />
+          <Input
+            type="text"
+            placeholder="Buscar por palavra-chave..."
+            className="pl-12 h-14 bg-white/[0.03] border border-brand-border text-brand-textPrimary placeholder:text-brand-textMuted rounded-xl text-lg focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:border-brand-primary/40 transition-colors"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+        <Select
+          value={selectedCategory || 'all'}
+          onValueChange={(val) => setSelectedCategory(val === 'all' ? null : val)}
+        >
+          <SelectTrigger className="h-14 w-full md:w-64 rounded-xl bg-white/[0.03] border-brand-border text-brand-textPrimary text-base focus:ring-2 focus:ring-brand-primary transition-colors">
+            <SelectValue placeholder="Categoria" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todas as categorias</SelectItem>
+            {availableCategories.map((c) => (
+              <SelectItem key={c.id} value={c.id}>
+                {c.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {loading ? (
@@ -120,37 +156,7 @@ export default function Index() {
           {error}
         </div>
       ) : (
-        <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
-          {availableCategories.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className={cn(
-                  'px-4 py-2 rounded-full text-sm font-medium transition-all border',
-                  selectedCategory === null
-                    ? 'bg-brand-primarySoft border-brand-primary/40 text-brand-primary'
-                    : 'bg-white/[0.03] border-brand-border text-brand-textSecondary hover:text-brand-textPrimary hover:border-white/15',
-                )}
-              >
-                Todas
-              </button>
-              {availableCategories.map((c) => (
-                <button
-                  key={c.id}
-                  onClick={() => setSelectedCategory(c.id)}
-                  className={cn(
-                    'px-4 py-2 rounded-full text-sm font-medium transition-all border',
-                    selectedCategory === c.id
-                      ? 'bg-brand-primarySoft border-brand-primary/40 text-brand-primary'
-                      : 'bg-white/[0.03] border-brand-border text-brand-textSecondary hover:text-brand-textPrimary hover:border-white/15',
-                  )}
-                >
-                  {c.label}
-                </button>
-              ))}
-            </div>
-          )}
-
+        <div className="animate-fade-in" style={{ animationDelay: '200ms' }} ref={resultsRef}>
           {groupedQuestions.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-brand-textMuted text-center">
               <FileQuestion className="w-12 h-12 mb-4 opacity-50" />
